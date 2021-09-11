@@ -6,41 +6,14 @@ def GenerateBoard():
 {board[3]}|{board[4]}|{board[5]}
 {board[6]}|{board[7]}|{board[8]}""")
 
-# def XInput():
-#   position = int(input("'X' Turn, where would you like to place your piece (0-9): "))
-#   ++position
-
-#   run = True
-
-#   while(run):
-#     if board[position] == '-':
-#       board[position] = 'X' 
-#       run = False
-#     else:
-#       position = int(input("Please enter a valid position, 1-9: "))
-#       ++position
-
-# def XInput():
-#   position = int(input("'O' Turn, where would you like to place your piece (0-9): "))
-#   ++position
-
-#   run = True
-
-#   while(run):
-#     if board[position] == '-':
-#       board[position] = 'O' 
-#       run = False
-#     else:
-#       position = int(input("Please enter a valid position, 1-9: "))
-#       ++position
-
 def GetInput(player):
   position = int(input(f"'{player}' Turn, where would you like to place your piece (0-9): "))
-  ++position
+  position -= 1
 
   run = True
 
-  while(run):
+  #adds piece to the board - with error checking
+  while(run == True):
     if board[position] == '-':
       if player == 'O':
         board[position] = 'O' 
@@ -50,46 +23,62 @@ def GetInput(player):
         run = False
     else:
       position = int(input("Please enter a valid position, 1-9: "))
-      ++position
+      position -= 1
 
 def CheckWin(piece):
+  global winner
+
+  #check vertical wins
   for i in range(3):
-    if board[i] == piece & board[i + 3] == piece & board[i + 6] == piece:
+    if board[i] == piece and board[i + 3] == piece and board[i + 6] == piece:
       winner = piece
 
-  j = 1
-  for i in range(3):
-    if board[j] == piece & board[j + 1] == piece & board[j + 2] == piece:
+  #check horizontal wins
+  for i in range(0, 8, 4):
+    if board[i] == piece and board[i + 1] == piece and board[i + 2] == piece:
       winner = piece
-    j += 3
+    
+  #check diagonal wins
+  if board[0] == piece and board[4] == piece and board[8] == piece:
+    winner = piece
 
-  k = 1
-  for i in range(2):
-    if board[k] == piece & board[k + 4] == piece & board[k + 8] == piece:
-      winner = piece
-    k += 3
-
-  for i in range(board.count()):
-    if board[i] != 'X' | 'O':
+  if board[i] == piece and board[2] == piece and board[4] == piece:
+    winner = piece
+  
+  #check tie
+  for i in range(len(board)):
+    if board[i] != 'X' or 'O':
       return
-    elif i == 9:
+    elif i == 8:
       winner = 'Tie'
 
-def MainGameLoop():
-  while winner != None:
+def MainGameLoop(isWinner):
+  while isWinner == None:
+    #X's turn
     GenerateBoard()
-    GetInput()
-    CheckWin()
+    GetInput('X')
+    CheckWin('X')
+    CheckWin('O')
 
+    #O's turn
     GenerateBoard()
-    GetInput()
-    CheckWin()
+    GetInput('O')
+    CheckWin('O')
+    CheckWin('X') 
 
-  if winner == 'Tie':
-    GenerateBoard()
-    print(f"It is a Tie.")
-  else:
-    GenerateBoard()
-    print(f"{winner} is the winner.")
+    #display who won
+    if isWinner == 'Tie':
+      GenerateBoard()
+      print(f"It is a Tie.")
+    elif isWinner == 'X' or 'O':
+      GenerateBoard()
+      print(f"{isWinner} is the winner.")
 
-MainGameLoop()
+  playAgain = str(input("Would you like to play again y/n? "))
+
+  if playAgain == 'y':
+    isWinner = None
+  elif playAgain == 'n':
+    return
+
+MainGameLoop(winner)

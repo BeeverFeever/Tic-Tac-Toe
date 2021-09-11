@@ -78,12 +78,13 @@ namespace Tic_Tac_Toe
                     }                    
                 }
 
-                for (int i = 0; i < 3; i += 3)
-                {
-                    if(board[i] == "X" && board[i + 4] == "X" && board[i + 8] == "X") {
+                if(board[i] == "X" && board[i + 4] == "X" && board[i + 8] == "X") {
                     XWin = true;
-                    }                    
-                }
+                }   
+
+                if(board[i] == "X" && board[i + 2] == "X" && board[i + 4] == "X") {
+                    XWin = true;
+                } 
             }
 
             void checkOWin() 
@@ -102,12 +103,15 @@ namespace Tic_Tac_Toe
                     }                    
                 }
 
-                for (int i = 0; i < 3; i += 3)
-                {
-                    if(board[i] == "O" && board[i + 4] == "O" && board[i + 8] == "O") {
+                
+                if(board[i] == "O" && board[i + 4] == "O" && board[i + 8] == "O") {
                     OWin = true;
-                    }                    
-                }
+                }   
+
+                if(board[i] == "O" && board[i + 2] == "O" && board[i + 4] == "O") {
+                    OWin = true;
+                }                  
+                
             }
 
             void checkTie()
