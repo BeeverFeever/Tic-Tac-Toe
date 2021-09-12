@@ -66,19 +66,12 @@ def MainGameLoop(isWinner):
     CheckWin('O')
     CheckWin('X') 
 
-    #display who won
-    if isWinner == 'Tie':
-      GenerateBoard()
-      print(f"It is a Tie.")
-    elif isWinner == 'X' or 'O':
-      GenerateBoard()
-      print(f"{isWinner} is the winner.")
-
-  playAgain = str(input("Would you like to play again y/n? "))
-
-  if playAgain == 'y':
-    isWinner = None
-  elif playAgain == 'n':
-    return
+  #display who won
+  if isWinner == 'Tie':
+    GenerateBoard()
+    print(f"It is a Tie.")
+  elif isWinner == 'X' or 'O':
+    GenerateBoard()
+    print(f"{isWinner} is the winner.")
 
 MainGameLoop(winner)
