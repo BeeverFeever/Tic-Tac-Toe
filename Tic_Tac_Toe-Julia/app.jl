@@ -46,7 +46,7 @@ function CheckWin(piece, _board)
 
   return winner
 
-function Main()
+function MainGameLoop()
   playing = true 
 
   while playing == true 
@@ -71,4 +71,4 @@ function Main()
   end
 end
 
-Main()
+MainGameLoop()
